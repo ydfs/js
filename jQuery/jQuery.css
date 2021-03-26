@@ -86,7 +86,10 @@ html, body{
   color: #BABABA;
   border-radius: 1px;
   transform: scale(1.7);
-
+}
+.center-item:hover .center-item-x{
+  display: inline-block;
+  color: #999;
 }
 
 .center-item.active .center-item-r{
