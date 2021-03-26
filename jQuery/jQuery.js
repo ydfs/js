@@ -96,8 +96,8 @@ const PAGE = {
       })
       this.value = '';
       PAGE.render();
-    },
-    toggleTodo: function(e) {
+  },
+    toggleTodo: function() {
       let todos = PAGE.data.todos;
       let todoItem = $(this).parent();
       let index = todoItem.attr('data-index');

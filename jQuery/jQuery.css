@@ -9,7 +9,6 @@ html, body{
   font-family: PingFang SC;
 }
 .page{
-  /* margin: 100px auto; */
   width: 660px;
 }
 .page-header{
@@ -30,9 +29,6 @@ html, body{
 }
 .page-body{
   box-shadow: 0px 2px 8px 0px rgba(204, 204, 204, 0.54);
-  /* border-radius: 2px; */
-  
-
 }
 .body-top{
   border: 1px solid #E0E0E0;
@@ -85,7 +81,7 @@ html, body{
   color: #222222;
 }
 .center-item-x{
-  /* display: none; */
+  display: none;
   cursor: pointer;
   color: #BABABA;
   border-radius: 1px;
