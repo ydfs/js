@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data</title>
+  <style type="text/css">
+    *{
+      margin: 0;
+      padding: 0;
+      font: 24px Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      box-sizing: border-box;
+      color: #666;
+    }
+    .todos-container{
+      margin: 100px auto;
+      width: 550px;
+    }
+    .todos-title{
+      font-size: 100px;
+      text-align: center;
+      font-weight: 100;
+      color: rgba(175, 47, 47, 0.15);
+      margin-bottom: 20px;
+    }
+    .todos-content{
+      position: relative;
+      background: #fff;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+    .todos-input{
+      display: block;
+      width: 100%;
+      padding: 16px 16px 16px 60px;
+      border: none;
+      outline: none;
+      font-weight: 200;
+    }
+    .todo-item{
+      padding: 16px;
+      display: flex;
+      border-top: 1px solid #e4e4e4;
+    }
+    .todo-item-hd{
+      position: relative;
+      width: 28px;
+      height: 28px;
+      border: 1px solid #e4e4e4;
+      border-radius: 50%;
+      margin-right: 16px;
+      cursor: pointer;
+    }
+    .todo-item-bd{
+      flex: 1;
+      color: #333;
+    }
+    .todo-item-ft{
+      display: none;
+      cursor: pointer;
+    }
+    .todo-item:hover .todo-item-ft{
+      display: inline-block;
+      color: #999;
+    }
+    .todo-item.active .todo-item-hd::before{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(175, 47, 47, 0.15);
+    }
+    .todo-item.active .todo-item-bd{
+      text-decoration: line-through;
+      color: #999;
+    }
+    .todos-filter{
+      border-top: 1px solid #e4e4e4;
+      padding: 8px 16px;
+      text-align: center;
+    }
+    .todos-filter .filter-item{
+      display: inline-block;
+      margin: 0 10px;
+      padding: 4px 8px;
+      font-size: 14px;
+      color: #999;
+      border: 1px solid #999;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .todos-filter .filter-item.active{
+      border-color: #333;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="todos-container">
+    <h1 class="todos-title">todos</h1>
+    <div class="todos-content">
+      <div class="todos-input-cell">
+        <input id="todo-input" class="todos-input" type="text" name="todo" placeholder="请输入计划事项">
+      </div>
+      <div id="todos-list" class="todos-list">
+        <div class="todo-item">
+          <div class="todo-item-hd"></div>
+          <div class="todo-item-bd">打一瓶酱油</div>
+          <div class="todo-item-ft">x</div>
+        </div>
+        <div class="todo-item active">
+          <div class="todo-item-hd"></div>
+          <div class="todo-item-bd">跑步800米</div>
+          <div class="todo-item-ft">x</div>
+        </div>
+      </div>
+      <div class="todos-filter" id="todos-filter">
+        <span class="filter-item active">全部</span>
+        <span class="filter-item">待办</span>
+        <span class="filter-item">已办</span>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    const PAGE={
+      data: {
+        todos: [{
+          title: '打一瓶酱油',
+          completed: false
+        },{
+          title: '跑步800米',
+          completed: true
+        }],
+        filter: 1,
+        filters: {
+          1: '全部',
+          2: '待办',
+          3: '已办',
+        }
+      },
+      init: function() {
+        this.bind();
+        this.render();
+      },
+      bind: function() {
+        let input = document.getElementById('todo-input');
+        let todoList = document.getElementById('todos-list');
+        let todoFilter =document.getElementById('todos-filter');
+        input.addEventListener('keyup',this.addTodo);
+        this.onEventLister(todoList,'click','todo-item-hd',this.toggleTodo);
+        this.onEventLister(todoList,'click','todo-item-ft',this.removeTodo);
+        this.onEventLister(todoFilter,'click','filter-item',this.filterTodo);
+      },
+      onEventLister: function(parentNode,action,childClassName,callback) {
+        parentNode.addEventListener(action,function(e){
+          e.target.className.indexOf(childClassName) >= 0 && callback(e);
+        })
+      },
+      render: function() {
+        let todos = this.data.todos;
+        todos.forEach((data,index)=> data.index = index);
+        let filters = this.data.filters;
+        let filter = this.data.filter;
+
+        let showTodos;
+        switch (filter) {
+          case 2:
+            showTodos = todos.filter( data => !data.completed );
+            break;
+          case 3:
+            showTodos = todos.filter( data => data.completed );
+            break;
+          default:
+            showTodos = todos;
+            break
+        }
+
+        let todosElement = showTodos.map( data =>{
+          return `
+            <div class="todo-item ${data.completed ? 'active' : ''}" data-index="${data.index}">
+              <div class="todo-item-hd"></div>
+              <div class="todo-item-bd">${data.title}</div>
+              <div class="todo-item-ft">x</div>
+            </div>
+          `
+        }).join('');
+
+        let filterElement = Object.keys(filters).map( key => {
+          return `<span class="filter-item ${filter == key ? 'active' : ''}" data-id="${key}">${filters[key]}</span>`
+        }).join('');
+
+        let todoList = document.getElementById('todos-list');
+        let todoFilter = document.getElementById('todos-filter');
+        todoList.innerHTML = todosElement;
+        todoFilter.innerHTML = filterElement;
+      },
+      addTodo: function(e){
+        let value = this.value.trim();
+        if (e.which !== 13 || !value) {
+          return;
+        }
+        let todos = PAGE.data.todos;
+        todos.push({
+          title: value,
+          completed: false
+        })
+        this.value = '';
+        PAGE.render();
+      },
+      toggleTodo: function(e){  
+        let todos = PAGE.data.todos;
+        let todoItem = e.target.parentNode;
+        let index = todoItem.dataset.index;
+        todos[index].completed = !todos[index].completed;
+        PAGE.render();
+      },
+      removeTodo: function(e){
+        let todos = PAGE.data.todos;
+        let todoItem = e.target.parentNode;
+        let index = todoItem.dataset.index;
+        todos.splice(index,1);
+        PAGE.render();
+      },
+      filterTodo: function(e){
+        let filterItem = e.target;
+        let filter = filterItem.dataset.id;
+        PAGE.data.filter = Number(filter);
+        PAGE.render();
+      }
+    }
+
+    PAGE.init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jQuery</title>
+  <link rel="stylesheet" href="./jQuery.css">
+</head>
+<body>
+    <div class="page">
+      <div class="page-header">
+        <h1 class="header-left">极客</h1>
+        <h1 class="header-right">todos</h1>
+      </div>
+      <div class="page-body">
+        <div class="body-top">
+          <div class="top-left"></div>
+          <input id="top-input" class="tops-input" type="text" name="top" placeholder="需要做什么？">
+        </div>
+        <div class="body-center" id="body-center">
+          <div class="center-item">
+            <div class="center-item-r"></div>
+            <div class="center-item-w">跑步</div>
+            <div class="center-item-x">x</div>
+          </div>
+          <div class="center-item">
+            <div class="center-item-r"></div>
+            <div class="center-item-w">游泳</div>
+            <div class="center-item-x">x</div>
+          </div>
+          <div class="center-item active">
+            <div class="center-item-r"></div>
+            <div class="center-item-w">背单词</div>
+            <div class="center-item-x">x</div>
+          </div>
+        </div>
+        <div class="body-bottom" id="body-bottom">
+          <span class="bottom-left"></span>
+          <div class="bottom-center" id="bottom-center">
+            <span class="center-ter active" data-index="1">全部</span>
+            <span class="center-ter" data-index="2">进行中</span>
+            <span class="center-ter" data-index="3">已完成</span>
+          </div>
+          <span class="bottom-right">删除已完成</span>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+  <script src="./jQuery.js"></script>
+</body>
+</html>
