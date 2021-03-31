@@ -32,6 +32,12 @@ const PAGE = {
       this.onEventLister(todoFilter,'click','center-ter',this.filterTodo);
       window.addEventListener('unload',this.saveTodos);
   },
+  onEventLister: function(parentNode,action,childClassName,callback) {
+    parentNode.addEventListener(action,function(e){
+      e.target.className.indexOf(childClassName) >= 0 && callback(e);
+    })
+  },
+  
   getTodos: function() {
       let todos = localStorage.getItem('todos');
       todos = JSON.parse(todos) || [];
@@ -43,11 +49,7 @@ const PAGE = {
       let todosStr = JSON.stringify(todos);
       localStorage.setItem('todos',todosStr);
   },
-  onEventLister: function(parentNode,action,childClassName,callback) {
-      parentNode.addEventListener(action,function(e){
-        e.target.className.indexOf(childClassName) >= 0 && callback(e);
-      })
-  },
+  
   render: function() {
       let todos = this.data.todos;
       let filters = this.data.filters;

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul class="page" id="page">
+    <li id="shouye" class="p-prev disabled">
+     <a href='javascript:indexpage(1);'>首 页</a>
+    </li>
+    <li id="shangyiye" class="p-prev disabled" >
+     <a href='javascript:indexpage(-1);'><i></i>上一页</a>
+    </li>
+    <li ><a id="one" href="javascript:void(0);" >1</a></li>
+    <li><a id="two" href="javascript:void(0);" >2</a></li>
+    <li><a id="three" href="javascript:void(0);" >3</a></li>
+    <li class="more"><a id="five" href="javascript:void(0);" >...</a></li>
+    <li><a id="fore" href="javascript:void(0);" >13855</a></li>
+    <li class='p-next'>
+     <a href='javascript:indexpage(-3);' onclick="jumpToPage('2','/goods/ajaxqueryGoodsList.do.html','','goodsListContainer','13855', listPageCallback);">下一页<i></i></a>
+    </li>
+    <li id="weiye" class='p-next'>
+     <a href='javascript:void(0);' onclick="indexpage(0);">尾 页</a>
+    </li>
+    <li class="total">
+        <span id="span_number">共13855页 到第<input type="text" id="input_number" class="page-txtbox" />页
+         <input name="" value="确定" type="button" onclick="jumpToPage(jQuery('#input_number').val(),'/goods/ajaxqueryGoodsList.do.html','','goodsListContainer','13855', listPageCallback);" class="page-btn"/>
+        </span>
+    </li>
+   </ul>
+
+    <script src="text/java">
+      function goPage(pno,psize){ 
+ var itable = document.getElementById("idData"); 
+ var num = itable.rows.length;//表格行数 
+ var totalPage = 0;//总页数 
+ var pageSize = psize;//每页显示行数 
+ if((num-1)/pageSize > parseInt((num-1)/pageSize)){  
+  totalPage=parseInt((num-1)/pageSize)+1;  
+  }else{  
+  totalPage=parseInt((num-1)/pageSize);  
+  }  
+ var currentPage = pno;//当前页数 
+ var startRow = (currentPage - 1) * pageSize+1;//开始显示的行  
+  var endRow = currentPage * pageSize+1;//结束显示的行  
+  endRow = (endRow > num)? num : endRow; 
+ //前三行始终显示 
+ for(i=0;i<1;i++){ 
+ var irow = itable.rows[i]; 
+ irow.style.display = "block"; 
+ } 
+ for(var i=1;i<num;i++){ 
+ var irow = itable.rows[i]; 
+ if(i>=startRow&&i<endRow){ 
+ irow.style.display = "block"; 
+ }else{ 
+ irow.style.display = "none"; 
+ } 
+ } 
+  var pageEnd = document.getElementById("pageEnd"); 
+  var tempStr = ""; 
+  if(currentPage>1){ 
+  tempStr += "<a href="/" mce_href="/""#/" onmouseout='MM_swapImgRestore()' onmouseover=/"MM_swapImage('Image69','','images/back_buttom01_dowm.jpg',1)/" onClick=/"goPage("+(currentPage-1)+","+psize+")/"><img src="/" mce_src="/""images/back_buttom01.jpg/" name='Image69' width='38' height='15' border='0' id='Image69' /></a> " 
+  }else{ 
+  tempStr += "<a href="/" mce_href="/""#/" onmouseout='MM_swapImgRestore()' onmouseover=/"MM_swapImage('Image69','','images/back_buttom01_dowm.jpg',1)/"><img src="/" mce_src="/""images/back_buttom01.jpg/" name='Image69' width='38' height='15' border='0' id='Image69' /></a> "; 
+  } 
+  for (var i = 1; i <= totalPage; i++) { 
+   if (i == currentPage) { 
+     tempStr += i+" "; 
+   } else { 
+     tempStr += "<a href="/" mce_href="/""#/" onClick=/"goPage("+(i)+","+psize+")/">"+i+"</a> " 
+   } 
+  } 
+  if(currentPage<totalPage){ 
+  tempStr += "<a href="/" mce_href="/""#/" onmouseout=/"MM_swapImgRestore()/" onmouseover=/"MM_swapImage('Image68','','images/next_buttom01_dowm.jpg',1)/" onClick=/"goPage("+(currentPage+1)+","+psize+")/"><img src="/" mce_src="/""images/next_buttom01.jpg/" name='Image68' width='38' height='15' border='0' id='Image68' /></a> "; 
+  }else{ 
+  tempStr += "<a href="/" mce_href="/""#/" onmouseout=/"MM_swapImgRestore()/" onmouseover=/"MM_swapImage('Image68','','images/next_buttom01_dowm.jpg',1)/"><img src="/" mce_src="/""images/next_buttom01.jpg/" name='Image68' width='38' height='15' border='0' id='Image68' /></a> "; 
+  } 
+  tempStr +="<a href="/" mce_href="/""#top/" onmouseout=/"MM_swapImgRestore()/" onmouseover=/"MM_swapImage('Image20','','images/top_buttom01_dowm.jpg',1)/"><img src="/" mce_src="/""images/top_buttom01.jpg/" name='Image20' width='38' height='15' border='0' id='Image20' /></a>"; 
+  document.getElementById("barcon").innerHTML = tempStr; 
+  } 
+ var base='<%=base%>'; 
+ window.onload = function(){ 
+  goPage(1,10); 
+ } 
+<div id="barcon" name="barcon"></div> 
+    </script>
+</body>
+</html>
