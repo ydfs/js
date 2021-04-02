@@ -54,7 +54,6 @@ const PAGE = {
       return index>=(currentPage - 1) * pageSize && index<currentPage * pageSize
     })
     console.log(showData);
-
     let showDataStr = showData.map((item, index) => {
       return `<div class="bady-page">
       <img src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=289237221,199580710&fm=26&gp=0.jpg">
