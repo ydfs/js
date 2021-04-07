@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MessageBorad</title>
+  <style type="text/css">
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .card-list-contaienr{
+      position: relative;
+      width: 800px;
+      height: 400px;
+      background: #f5f5f5;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .card-item{
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: #ccc;
+      padding: 10px;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div style="height: 200px;"></div>
+  <div class="card-list-contaienr" id="card-list">
+      <!-- <div class="card-item" style="top:50px;left: 50px;">haha</div> -->
+  </div>
+  <!-- <div style="height: 400px;"></div> -->
+  
+  <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  // 定义卡片内容
+    let cardList = [{name:'Jax'},{name:'Joye'},{name:'Jimmy'},{name:'Jay'}];
+    let backgroundColors = ['#f50','#2db7f5','#87d068','#108ee9'];
+    const PAGE = {
+      data: {
+        backgroundColors: backgroundColors,
+        defaultDatas: cardList,   //卡片内容数据
+        itemWidth: 100,
+        itemHeight: 100,
+        paddingOffset: 50,
+        zIndex: 0,
+        item: null,
+        itemOffsetTop: null,
+        itemOffsetLeft: null,
+        pageX: null,
+        pageY: null,
+        isLock: true,
+      },
+      init: function() {
+        this.setDefaultData();
+        this.bind();
+      },
+
+      bind: function() {
+        let cartList = document.getElementById('card-list');  //委托 card-list 绑定点击 card-item 触发事件
+        this.onEventLister(cartList, 'mousedown', 'card-item', this.handleMouseDown);
+
+        window.addEventListener('mousemove',this.handleMouseMove);
+        window.addEventListener('mouseup',this.handleMouseUp);
+      },
+      onEventLister: function(parentNode,action,childClassName,callback) {
+        parentNode.addEventListener(action,function(e){
+          e.target.className.indexOf(childClassName) >= 0 && callback(e);
+        })
+      },
+      handleMouseDown: function(e) {  //鼠标点击存储数据并开锁
+        let item = e.target;  //获取当前点击的元素，为其层级设置到当前最高
+        item.style.zIndex = ++ PAGE.data.zIndex;
+
+        PAGE.data.itemOffsetTop = item.offsetTop;  //获取当前元素内容距离容器顶部、左部的偏移量、以及鼠标点击的XY坐标轴数据,存储到 PAGE.data 中
+        PAGE.data.itemOffsetLeft = item.offsetLeft;
+        PAGE.data.pageX = e.pageX;
+        PAGE.data.pageY = e.pageY;
+
+        PAGE.data.item = item;  //存储当前点击元素
+        PAGE.data.isLock = false;  //开锁
+      },
+      handleMouseMove: function(e) {  //鼠标移动触发的事件
+        if(!PAGE.data.isLock){  //如果当前锁为开的状态执行以下代码
+
+          let cardList = document.getElementById('card-list');  //获取容器、卡片项目的宽高和距离容器边缘的偏移量计算出最大值
+          let containerWidth = cardList.offsetWidth;
+          let containerHeight = cardList.offsetHeight;
+          let itemWidth  = PAGE.data.itemWidth;
+          let itemHeight = PAGE.data.itemHeight;
+          let paddingOffset = PAGE.data.paddingOffset;
+
+          let maxWidth  = containerWidth - itemWidth - paddingOffset;  //根据当前鼠标坐标于存储鼠标坐标对比计算出偏移量计算出卡片的距离边缘偏移量
+          let maxHeight = containerHeight - itemHeight - paddingOffset;
+          let translateX = e.pageX - PAGE.data.pageX + PAGE.data.itemOffsetLeft;
+          let translateY = e.pageY - PAGE.data.pageY + PAGE.data.itemOffsetTop;
+
+          translateX = translateX > maxWidth ? maxWidth : translateX;  //设置偏移量的最大和最小值，最大不超过最大值，最少不少于边缘值。
+          translateY = translateY > maxHeight ? maxHeight : translateY;
+          translateX = translateX < paddingOffset ? paddingOffset : translateX;
+          translateY = translateY < paddingOffset ? paddingOffset : translateY;
+
+          PAGE.data.item.style.left = translateX + 'px';  //为存储的元素设置偏移值
+          PAGE.data.item.style.top = translateY + 'px';
+        }
+      },
+      handleMouseUp: function() {    //鼠标回弹触发的事件；设置关锁，这样鼠标移动时就不会触发了
+        PAGE.data.isLock = true
+      },
+
+
+      setDefaultData: function() {  //用于设置所有卡片
+        PAGE.data.defaultDatas.forEach( data => PAGE.addCart(data.name));  //获取 PAGE.data.defaultDatas 循环调用 PAGE.addCart
+      },
+      addCart: function(name) {  //用于设置单个卡片
+        let cardList = document.getElementById('card-list');
+        let containerWidth = cardList.offsetWidth;  //获取 card-list卡片容器元素的高度、宽度
+        let containerHeight = cardList.offsetHeight;
+
+        let itemWidth  = PAGE.data.itemWidth;   //从 PAGE.data 中获取卡片项目的宽度、高度、以及距离边框的距离值
+        let itemHeight = PAGE.data.itemHeight;
+        let paddingOffset = PAGE.data.paddingOffset;
+
+        let maxWidth  = containerWidth - itemWidth - paddingOffset;  //根据容器、项目、距边框距离计算出卡片距离顶部以及左部的最大偏移值
+        let maxHeight = containerHeight - itemHeight - paddingOffset;
+
+        let randomTop = PAGE.randomBetween(paddingOffset,maxHeight);  //调用 PAGE.randomBetween 获取距离容器边缘顶部、左部偏移值的随机数
+        let randomLeft = PAGE.randomBetween(paddingOffset,maxWidth);
+
+        let zIndex = ++PAGE.data.zIndex;  //设置 PAGE.data.zIndex 增加一级，并获取增加后的值
+
+        let backgroundColors = PAGE.data.backgroundColors;  //根据 zIndex 除余按顺序获取背景色的值
+        let backgroundColor = backgroundColors[zIndex%backgroundColors.length];
+
+        let cartItem = document.createElement('div');  //创建新的卡片元素 card-item 并为其赋值，设置 className 及样式属性
+        cartItem.setAttribute('class', 'card-item');
+        cartItem.innerText = name;
+        let styleStr = `
+          z-index:${zIndex};
+          background:${backgroundColor};
+          top:${randomTop}px;
+          left:${randomLeft}px;`;
+        cartItem.setAttribute('style', styleStr);
+
+        cardList.appendChild(cartItem);  //把新创建的元素添加到 card-list 中
+      },
+
+      randomBetween:function(min,max){  //创建 PAGE.randomBetween 随机数方法，接受两个参数，返回两参数之间的随机数
+        return Math.floor(Math.random() * (max - min) + min);
+      }         //向下舍入 ; 返回大于等于0小于1的随机数
+    }
+
+    PAGE.init();</script>
+</body>
+</html>

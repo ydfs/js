@@ -1,0 +1,332 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: FZLTHJW;
+  font-weight: normal;
+  color: #000000;
+  font-size: 16px;
+}
+html,body{
+
+}
+
+.whole{
+  min-width: 1250px;
+  display: grid;
+  justify-content: center;
+  background-image:url(picture/banner-bg.jpg);
+  background-repeat: no-repeat;
+}
+.header-page{
+  display: flex;
+}
+.header-page .logo{
+  width: 112px;
+  height: 41px;
+}
+.header-page .banner{
+  margin-top: 140px;
+  margin-bottom: 58px;
+}
+
+.body-page{
+  width: 1000px;
+  background: #FFFFFF;
+  border: 6px solid #E2E2E2;
+  margin-top: 37px;
+}
+.volume{
+  margin-left: -42px;
+  margin-top: -22px;
+  position: absolute;
+  width: 1085px;
+}
+.body-top{
+  display: flex;
+  position: relative;
+}
+.body-top img{
+  height: 107px;
+  width: 60px;
+  margin-left: 26px;
+  margin-top: 31px;
+}
+.top-word{
+  margin-left: 18px;
+  width: 792px;
+}
+.top-word h1{
+  font-size: 30px;
+  text-align: center;
+  margin-top: 98px;
+}
+.top-word p{
+  text-align: center;
+  margin-top: 31px;
+  margin-bottom: 84px;
+  line-height: 26px;
+}
+.body-top .rightmost{
+  width: 72px;
+  height: 30px;
+  position: absolute;
+  margin-left: 1006px;
+  margin-top: 269px;
+}
+.rightmost-box{
+  position: absolute;
+  display: grid;
+  background: #FFFFFF;
+  margin-left: 1032px;
+  margin-top: 298px;
+}
+.rightmost-box a{
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 80px;
+  height: 79px;
+  background: #FFFFFF;
+  border: 1px solid #E2E2E2;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  color: #000000;
+}
+.rightmost-box .check{
+  width: 78px;
+  height: 7px;
+  margin-left: 2px;
+  margin-top: 0px;
+}
+
+
+
+.body-center{
+  background: #F7F7F7;
+}
+.introduce{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 24px;
+}
+.introduce .left{
+  height: 174px;
+  width: 60px;
+}
+.introduce p{
+  height: 95px;
+  width: 512px;
+}
+.introduce .right{
+  height: 216.5px;
+  width: 255.4px;
+}
+
+.teacher{
+
+}
+.teacher .red{
+  margin-left: 20px;
+}
+
+.word{
+  display: inline-block;
+}
+.word h2{
+  font-size: 22px;
+}
+.word h3{
+  color: #333333;
+  font-size: 16px;
+}
+
+.data-box{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  padding-bottom: 40px;
+}
+.teacher-data{
+  text-align: center;
+  background: url(picture/card-bg.png) no-repeat;
+  width: 290px;
+  height: 212px;
+}
+.teacher-data .people{
+  height: 80px;
+  margin-top: 13px;
+  margin-bottom: 15px;
+}
+.teacher-data h2{
+  font-size: 18px;
+}
+.teacher-data .word{
+  width: 263px;
+  height: 54px;
+  font-size: 14px;
+  line-height: 20px;
+  margin-top: 5px;
+  text-align: justify;
+}
+.arrow{
+  margin-left: 12px;
+  width: 976px;
+}
+.more{
+  font-size: 14px;
+  color: #666666;
+  text-align: end;
+  margin-right: 22px;
+  margin-top: -16px;
+  padding-bottom: 20px;
+}
+
+
+.activity{
+  background: url(picture/banner-mountain.png) right bottom no-repeat;
+}
+.activity .message{
+  text-align: center;
+  margin-bottom: 20px;
+  padding-top: 37px;
+  line-height: 35px;
+  font-size: 30px;
+}
+.activity .left{
+  position: absolute;
+  margin-top: -76px;
+  margin-left: 20px;
+}
+.box{
+  display: flex;
+  justify-content: flex-end;
+}
+.activity-content{
+
+}
+.activity-word{
+  width: 351px;
+  font-size: 14px;
+  text-decoration: underline;
+  line-height: 26px;
+  margin-bottom: 15px;
+}
+.details{
+  font-size: 12px;
+  line-height: 20px;
+}
+.word-box{
+  margin-left: 59px;
+  margin-top: -17px;
+  line-height: 14px;
+}
+.details-word{
+  width: 290px;
+  font-size: 12px;
+}
+.right{
+  margin-left: 37px;
+  margin-right: 36px;
+}
+.winner{
+  margin-left: 54px;
+  margin-top: 5px;
+  margin-bottom: 26px;
+}
+
+
+
+
+.message-box{
+  display: flex;
+  justify-content: center;
+}
+.message-box textarea{
+  width: 650px;
+  height: 81px;
+  background: rgba(101, 177, 217, 0);
+  border: 1px solid #DBDBDB;
+  outline: none;
+  font-size: 16px;
+  color: #000000;
+  line-height: 26px;
+  background:url(picture/textarea_bg_1.png) 0 0 no-repeat,
+            url(picture/textarea_bg_2.png) right bottom no-repeat;
+  padding-left: 12px;
+  padding-top: 5px;
+}
+textarea::-webkit-input-placeholder{
+	color: #000000;
+}
+.message-box button{
+  width: 150px;
+  height: 88px;
+  background: linear-gradient(0deg, #EBEBEB, #FAFAFA);
+  border: 1px solid #DBDBDB;
+  cursor: pointer;
+  outline: none;
+  color: #666666;
+  line-height: 22px;
+  margin-bottom: 59px;
+}
+
+.messages{
+height: 400px;
+padding-left: 50px;
+    padding-right: 50px;
+}
+.sentence-box{
+  background: linear-gradient(180deg,rgba(0,0,0,0) 98%,rgba(0,0,0,0) 1px,rgba(213, 214, 234, 0.9) 1px); 
+  background-color: #F0F5ff ;
+  background-size: 100% 1.7em;
+  width: 320px;
+  height: 158px;
+  display: grid;
+  align-content: flex-start;
+  justify-content: center;
+}
+.sentence-box::before{
+  position: absolute;
+  margin-top: -14px;
+  margin-left: -15px;
+  width: 43px;
+  height: 40px;
+  content:" ";
+  background:url(picture/message_bg_left.png) 0 0 no-repeat;
+}
+.sentence-box::after{
+  position: absolute;
+  width: 41px;
+  height: 42px;
+  margin-left: 294px;
+  margin-top: -13px;
+  content: " ";
+  background:url(picture/message_bg_right.png) right top no-repeat;
+}
+.sentence-box:hover{
+  
+}
+.sentence-box .name{
+  line-height: 26px;
+  margin-top: 20px;
+}
+.sentence-box .sentence{
+  width: 283px;
+  font-size: 14px;
+  line-height: 26px;
+}
+
+
+.footer-page{
+  text-align: center;
+}
+.footer-page h3{
+  font-size: 16px;
+  margin-top: 49px;
+}
+.footer-page h4{
+  font-size: 12px;
+  margin-bottom: 47px;
+}
