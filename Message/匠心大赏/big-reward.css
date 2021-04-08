@@ -93,6 +93,9 @@ html,body{
   font-size: 14px;
   color: #000000;
 }
+.rightmost-box a:hover{
+  color: #CF000D;;
+}
 .rightmost-box .check{
   width: 78px;
   height: 7px;
@@ -186,6 +189,7 @@ html,body{
 
 .activity{
   background: url(picture/banner-mountain.png) right bottom no-repeat;
+  margin-bottom: -13px;
 }
 .activity .message{
   text-align: center;
@@ -269,23 +273,27 @@ textarea::-webkit-input-placeholder{
   outline: none;
   color: #666666;
   line-height: 22px;
-  margin-bottom: 59px;
+  /* margin-bottom: 59px; */
 }
 
 .messages{
-height: 400px;
-padding-left: 50px;
-    padding-right: 50px;
+    position: relative;
+    height: 480px;
+    padding: 30px;
 }
 .sentence-box{
   background: linear-gradient(180deg,rgba(0,0,0,0) 98%,rgba(0,0,0,0) 1px,rgba(213, 214, 234, 0.9) 1px); 
-  background-color: #F0F5ff ;
+  /* background-color: #F0F5ff ; */
   background-size: 100% 1.7em;
   width: 320px;
-  height: 158px;
+  height: 160px;
+  border: 1px solid rgba(213, 214, 234, 0.9);
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.05);
   display: grid;
   align-content: flex-start;
   justify-content: center;
+  position: absolute;
+  cursor: pointer;
 }
 .sentence-box::before{
   position: absolute;
@@ -305,8 +313,18 @@ padding-left: 50px;
   content: " ";
   background:url(picture/message_bg_right.png) right top no-repeat;
 }
-.sentence-box:hover{
-  
+.sentence-box .close{
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+  margin-top: -25px;
+  margin-left: 300px;
+  width: 21px;
+  height: 26px;
+}
+.sentence-box:hover .close{
+  display: inline-block;
 }
 .sentence-box .name{
   line-height: 26px;
