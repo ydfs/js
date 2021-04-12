@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NavigatorBar</title>
+  <style type="text/css">
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .h400{
+      height: 400px;
+      border: 1px solid #e4e4e4;
+      color: #666;
+      padding: 20px;
+    }
+    .h800{
+      height: 800px;
+      border: 1px solid #e4e4e4;
+      color: #666;
+      padding: 20px;
+    }
+    .navigator-bar {
+      height: 60px;
+    }
+    .navigator-bar ul{
+      display: flex;
+      list-style-type: none;
+      background: #f5f5f5;
+    }
+    .navigator-bar.fixed-top ul{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+    .navigator-bar-item{
+      flex: 1;
+      line-height: 60px;
+      text-align: center;
+      cursor: pointer;
+      color: #666;
+      transition: all .2s ease;
+    }
+    .navigator-bar-item:hover{
+      background: #666;
+      color: #fff;
+    }
+    .navigator-bar-item.active{
+      background: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+    <div class="section-banner h400">SECTION Banner</div>
+    <div class="navigator-bar" id="navigator-bar">
+      <ul>
+        <li class="navigator-bar-item" data-nav="section-1">SECTION 1</li>
+        <li class="navigator-bar-item" data-nav="section-2">SECTION 2</li>
+        <li class="navigator-bar-item" data-nav="section-3">SECTION 3</li>
+        <li class="navigator-bar-item" data-nav="section-4">SECTION 4</li>
+        <li class="navigator-bar-item" data-nav="section-5">SECTION 5</li>
+      </ul>
+    </div>
+    <div class="h400" id="section-1">SECTION 1</div>
+    <div class="h400" id="section-2">SECTION 2</div>
+    <div class="h400" id="section-3">SECTION 3</div>
+    <div class="h400" id="section-4">SECTION 4</div>
+    <div class="h400" id="section-5">SECTION 5</div>
+    <div class="h800">SECTION Footer</div>
+
+  <script type="text/javascript">
+    const PAGE = {
+      data: {
+        navigatorBarIdArr: ['section-1','section-2','section-3','section-4','section-5'],
+        navigatorBarActiveId: '',
+        navigatorBarFixed: false,
+        navigatorBarFixedOffset: 460,
+        navigatorBarHeight: 60,
+      },
+      init: function () {
+        this.bind();
+      },
+      bind: function () {
+        window.addEventListener('scroll',this.refreshNavigator);
+        let navigatorBar = document.getElementById('navigator-bar');
+        this.onEventLister(navigatorBar,'click','navigator-bar-item',this.goNavigator);
+      },
+      onEventLister: function(parentNode,action,childClassName,callback) {
+        parentNode.addEventListener(action,function(e){
+          e.target.className.indexOf(childClassName) >= 0 && callback(e);
+        })
+      },
+      refreshNavigator: function () {
+        PAGE.fixedNavigator();
+        PAGE.heightLightNavigator();
+      },
+      fixedNavigator: function () {   //用于判断定位导航
+        let scrollTop = document.documentElement.scrollTop;
+        let navigatorBarTop = (PAGE.data.navigatorBarFixedOffset + PAGE.data.navigatorBarHeight);
+        let navigatorBarFixed = scrollTop >= navigatorBarTop;
+
+        if(PAGE.data.navigatorBarFixed !==navigatorBarFixed){
+          PAGE.data.navigatorBarFixed = navigatorBarFixed;
+          let navigatorBar = document.getElementById('navigator-bar');
+
+          if(navigatorBarFixed){
+            navigatorBar.className = 'navigator-bar fixed-top'  //固定顶fixed-top
+          }else{
+            navigatorBar.className = 'navigator-bar'
+          }
+        }
+      },
+
+      heightLightNavigator: function () {   //导航滚动高亮
+        let scrollTop = document.documentElement.scrollTop;
+
+        let filterNav = PAGE.data.navigatorBarIdArr.filter( data => {   //筛选浏览器滚动过的，需要定位的导航容器 id
+          let offsetTop = document.getElementById(data).offsetTop;
+          return scrollTop >= offsetTop - PAGE.data.navigatorBarHeight;   //判断滚动距离是否大于容器距离文档顶部距离
+        })
+
+        let navigatorBarActiveId = filterNav.length ? filterNav[filterNav.length - 1] : '';  //定义当前应该高亮的容器 id ，为滚动过的最后一个，如果没有就为空
+        if(PAGE.data.navigatorBarActiveId !== navigatorBarActiveId){
+          PAGE.data.navigatorBarActiveId = navigatorBarActiveId;
+          let navigatorBarItems = document.getElementsByClassName('navigator-bar-item');  //获取所有 navigator-bar-item 导航项目元素
+
+          for (let i=0; i<navigatorBarItems.length; i++) {
+            let navigatorBarItem = navigatorBarItems[i];
+            let dataNav = navigatorBarItem.dataset.nav;  //获取导航元素的 data-nav 中对应容器的 id 值
+            if(dataNav === navigatorBarActiveId){
+              navigatorBarItem.className = 'navigator-bar-item active';
+            }else{
+              navigatorBarItem.className = 'navigator-bar-item';
+            }
+          }
+        }
+      },
+      
+      goNavigator: function (e) {  //定义 PAGE.goNavigator 点击导航页面定位事件
+        let id = e.target.dataset.nav;  //获取点击元素中对应容器 id 
+        let offsetTop = document.getElementById(id).offsetTop - PAGE.data.navigatorBarHeight;  //定义该容器 id 于顶部的距离值
+        document.documentElement.scrollTop = offsetTop;   //设置文档位置到距离中
+      },
+    }
+
+    PAGE.init();
+  </script>
+</body>
+</html>
