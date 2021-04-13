@@ -9,7 +9,7 @@
 <body>
   <div class="whole">
     <div class="page-header">
-      <div class="logo"><img src="//e.jikexueyuan.com/headerandfooter/images/logo.png?t=1513326254000"></div>
+      <div class="logo"><img src="./images/logo.jpg" width="100" alt="极客学院"></div>
       <div class="record-box">
         <a class="record">登录</a>
         <span class="separator"></span>
@@ -19,22 +19,22 @@
     <div class="page-img">
       <h1>DragonBoard™ 410c开发公开课</h1>
     </div>
-    <div class="page-fixed">
+    <div class="page-fixed" id="pageFixed">
       <ul class="fixed-box">
-        <li href="javascript:;">合作课程简介</li>
-        <li href="javascript:;">观看课程</li>
-        <li href="javascript:;">授课老师</li>
-        <li href="javascript:;">DragonBoard™ 410c</li>
-        <li href="javascript:;">关于 Qualcomm</li>
+        <li class="navigator" data-nav="navigation-1" href="javascript:;">合作课程简介</li>
+        <li class="navigator" data-nav="navigation-2" href="javascript:;">观看课程</li>
+        <li class="navigator" data-nav="navigation-3" href="javascript:;">授课老师</li>
+        <li class="navigator" data-nav="navigation-4" href="javascript:;">DragonBoard™ 410c</li>
+        <li class="navigator" data-nav="navigation-5" href="javascript:;">关于 Qualcomm</li>
       </ul>
     </div>
     <div class="page-body">
-      <div class="synopsis">
+      <div class="synopsis" id="navigation-1">
         <h2 class="left-top">课程简介</h2>
         <p>DragonBoard™ 410c是第一款基于高通骁龙400(Qualcomm® Snapdragon™ 400)系列处理器的开发板，具备强大的处理能力，可以支持快速软件开发、教育以及原型设计。 《DragonBoard 410c开发公开课》是美国高通公司和极客学院合作推出的专项培训课程之一，本课程从讲述相关概念到建立基于DragonBoard 410c软硬件的开发环境搭建，给大家提供一些常见问题的解决方案，深入浅出地讲述实际应用开发过程中所使用开发工具，帮助大家循序渐进了解DragonBoard 并实现基于DragonBoard™ 410c的开发环境。</p>
       </div>
 
-      <div class="watch-box cf">
+      <div class="watch-box cf" id="navigation-2">
         <h2>观看课程</h2>
         <div class="video-box">
           <img class="mask" src="./images/v.jpg">
@@ -163,7 +163,7 @@
         </div>
       </div>
 
-      <div class="teacher-box">
+      <div class="teacher-box" id="navigation-3">
         <img src="./images/sub-title-teacher.jpg">
         <div class="teachers">
           <!-- <div class="photo-box" style="transition-duration: 0ms;transform: translate3d(-960px, 0px, 0px); z-index: 1;"> -->
@@ -195,6 +195,13 @@
                   <br>Qualcomm开发者社区技术支持</p>
               <p class="intro">软件开发从业7年，具有丰富的Android、linux等经验，精通...</p>
             </div>
+            <div class="photo" data-index="4" style="width: 240px;">
+              <img src="./images/t_5.jpg">
+              <h3>张俊</h3>
+              <p class="career">中科创达软件工程师
+                  <br>Qualcomm开发者社区技术支持</p>
+              <p class="intro">软件研发从业6年，专注于Android底层驱动开发。</p>
+            </div>
           </div>
           
           <div class="towards-left">
@@ -206,7 +213,7 @@
         </div>
       </div>
 
-      <div class="dev-box">
+      <div class="dev-box" id="navigation-4">
         <img src="./images/sub-title-410.png">
         <div class="media cf">
           <img src="./images/img_1.jpg">
@@ -237,7 +244,7 @@
         </ul>
       </div>
 
-      <div class="qualcomm-box">
+      <div class="qualcomm-box" id="navigation-5">
         <img src="./images/about_title.jpg">
         <ul class="container cf">
           <li>

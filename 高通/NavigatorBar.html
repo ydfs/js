@@ -127,7 +127,7 @@
         if(PAGE.data.navigatorBarActiveId !== navigatorBarActiveId){
           PAGE.data.navigatorBarActiveId = navigatorBarActiveId;
           let navigatorBarItems = document.getElementsByClassName('navigator-bar-item');  //获取所有 navigator-bar-item 导航项目元素
-
+          
           for (let i=0; i<navigatorBarItems.length; i++) {
             let navigatorBarItem = navigatorBarItems[i];
             let dataNav = navigatorBarItem.dataset.nav;  //获取导航元素的 data-nav 中对应容器的 id 值

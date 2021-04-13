@@ -67,6 +67,12 @@ ol, ul {
   min-width: 1000px;
   z-index: 999;
 }
+.fixed-top{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
 .fixed-box{
   display: flex;
   height: 70px;
@@ -85,15 +91,18 @@ ol, ul {
 
 }
 .fixed-box li:hover{
-  background: rgba(45, 70, 148, 0.95);
+  background: rgba(69, 99, 189, 0.95);
 }
-
+.fixed-box .show{
+  background: rgba(69, 99, 189, 0.95);
+}
 
 .page-body{
   display: grid;
   justify-content: center;
   min-width: 1000px;
   margin-top: 61px;
+  margin-bottom: 310px;
 }
 .synopsis{
 
