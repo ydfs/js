@@ -5,6 +5,9 @@
   font-weight: 600;
   color: #666666;
 }
+/* .introduction-box .hide{
+  display: none;
+} */
 a{
   text-decoration: none;
 }
@@ -244,6 +247,7 @@ color: #333333;
   color: #009df7;
 }
 .introduction-box dd{
+  display: block;
   height: 40px;
   background: #fff;
   font-size: 12px;
@@ -257,7 +261,7 @@ color: #333333;
 .introduction-box dd:hover{
   color: #009df7;
 }
-.introduction-box span{
+.introduction-box dd span{
   float: right;
   margin-right: 20px;
 }
@@ -356,7 +360,10 @@ color: #333333;
   border-radius: 2px;
   background-color: #00a8ff;
 }
-.exchange .img-erwm{
+.exchange .qq a:hover {
+  background-color: #37b7ee;
+}
+.qq .img-erwm{
   display: none;
   position: absolute;
   width: 90px;
@@ -364,7 +371,9 @@ color: #333333;
   top: 50px;
   left: 40px;
 }
-
+.qq .btn-erwm:hover~.img-erwm{
+  display: block;
+}
 
 
 .teacher-box{
@@ -385,6 +394,7 @@ color: #333333;
   display: flex;
 }
 .photo{
+  flex: none;
   height: 210px;
   text-align: center;
 }

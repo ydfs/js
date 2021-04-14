@@ -10,7 +10,8 @@ const PAGE ={
     isLock: false,
     translateX: 0,
     defaultLenght: null,
-    itemWidth: null
+    itemWidth: null,
+    swiperItem:[],
   },
   init: function () {
     this.clone();
@@ -21,10 +22,13 @@ const PAGE ={
     let pageFixed = document.getElementById('pageFixed');
     this.onEventLister(pageFixed,'click','navigator',this.goNavigator);
 
-    let swiperPrev = document.getElementsByClassName('towards-left')[0];
-    swiperPrev.addEventListener('click',this.swiperPrev);
-    let swiperNext = document.getElementsByClassName('towards-right')[0];
-    swiperNext.addEventListener('click',this.swiperNext);
+    $(".teachers").on('click','.towards-left',this.swiperPrev);
+    $(".teachers").on('click','.towards-right',this.swiperNext);
+    // let swiperPrev = document.getElementsByClassName('towards-left')[0];
+    // swiperPrev.addEventListener('click',this.swiperPrev);
+    // let swiperNext = document.getElementsByClassName('towards-right')[0];
+    // swiperNext.addEventListener('click',this.swiperNext);
+    // window.addEventListener('resize',this.swiperReset);
   },
   onEventLister: function(parentNode,action,childClassName,callback) {
     parentNode.addEventListener(action,function(e){
@@ -82,18 +86,21 @@ const PAGE ={
   //1.克隆项目
   clone: function () {
     let swiperItem = document.getElementsByClassName('photo');
-    let firstItem = swiperItem[0].cloneNode();
-    let lastItem = swiperItem[swiperItem.length - 1].cloneNode();
-
-    let swiperList = document.getElementsByClassName('photo-box')[0];
+    for (let i = 0; i < swiperItem.length; i++) {
+      swiperItemLi = swiperItem[i].cloneNode(true).outerHTML;
+      PAGE.data.swiperItem.push(swiperItemLi);
+    };
+    let swiperList = document.getElementById('photo-box');
     let index = PAGE.data.index;
-    let swiperItemWidth = swiperList.offsetWidth;
-    PAGE.data.defaultLenght = swiperItem.length;
+    let swiperItemWidth = swiperItem[0].offsetWidth;
+    console.log(PAGE.data.swiperItem.slice(1));
+    PAGE.data.defaultLength = swiperItem.length;
     PAGE.data.itemWidth = swiperItemWidth;
-    PAGE.data.translateX = - (swiperItemWidth + swiperItemWidth * index);
-
-    swiperList.appendChild(firstItem);
-    swiperList.prepend(lastItem);
+    PAGE.data.translateX = -(swiperItemWidth) * (index + 4);
+    console.log(PAGE.data.translateX );
+    swiperList.insertAdjacentHTML('beforeEnd',PAGE.data.swiperItem.slice(0,-1).join(''));
+    swiperList.insertAdjacentHTML('afterBegin',PAGE.data.swiperItem.slice(1).join(''));
+    
     PAGE.goIndex(index);
   },
 
@@ -102,28 +109,52 @@ const PAGE ={
     let swiperDuration = PAGE.data.duration;
     let swiperItemWidth = PAGE.data.itemWidth;
     let beginTranslateX = PAGE.data.translateX;
-    let endTranslateX = - (swiperItemWidth + swiperItemWidth * index);
-    let swiperList = document.getElementsByClassName('photo-box')[0];
-    PAGE.animateTo(beginTranslateX,endTranslateX,swiperDuration,function(value){
+    let endTranslateX = - swiperItemWidth * (index + 4);
+
+    let swiperList = document.getElementById('photo-box');
+    let isLock = PAGE.data.isLock;
+    if(isLock) {
+      return
+    }
+    PAGE.data.isLock = true;
+    //执行成功才能进入animateTo 动画函数
+    PAGE.animateTo(beginTranslateX, endTranslateX, swiperDuration, function(value){
       swiperList.style.transform = `translateX(${value}px)`;
-    },function(value){
+    }, function(value){
+      swiperList.setAttribute('style', `translateX(${value}px)`);
+      PAGE.data.index = index;
+      PAGE.data.translateX = value;
+      //在goIndex方法中判断，在什么时候，瞬间重置到哪个位置。
+      let defaultLength = PAGE.data.defaultLength;
+      if(index === -4){
+          index = defaultLength - 4;
+          value = - (index + 4) * swiperItemWidth;  //最后一个元素瞬移的位置。
+      }
+      if(index === defaultLength){
+          index = 0;
+          value = - (index + 4) * swiperItemWidth;
+      }
       swiperList.style.transform = `translateX(${value}px)`;
       PAGE.data.index = index;
       PAGE.data.translateX = value;
+      console.log(index,value);
+
+      PAGE.data.isLock = false;
     })
   },
-  //2.创建 Page.animateTo 动画函数和 linear 匀速函数
-  animateTo: function(begin,end,duration,changeCallback,finishCallback) {
+
+  //2.创建 Page.animateTo 动画函数和 linear 匀速函数    ；duration全程时间
+  animateTo: function(begin, end, duration, changeCallback,finishCallback){
     let startTime = Date.now();
     requestAnimationFrame(function update() {
       let dataNow = Date.now();
       let time = dataNow - startTime;
       let value = PAGE.linear(time,begin,end,duration);
-      typeof changeCallback === 'function' && changeCallback(value)
+      typeof changeCallback === 'function' && changeCallback(value) // 执行变化事件回调
       if(startTime + duration > dataNow) {
         requestAnimationFrame(update)
       }else{
-        typeof finishCallback === 'function' && changeCallback(end)
+        typeof finishCallback === 'function' && finishCallback(end)   // 执行结束回调
       }
     })
   },
@@ -139,7 +170,19 @@ const PAGE ={
   swiperNext: function() {
     let index = PAGE.data.index;
     PAGE.goIndex(index + 1 );
-  }
+  },
+  //监听浏览器窗口变化
+  // swiperReset: function(e) {
+  //   let swiperList = document.getElementById('photo-box');
+  //   let swiperItemWidth = swiperList.offsetWidth;
+  //   let index = PAGE.data.index;
+
+  //   let translateX = - (swiperItemWidth + swiperItemWidth * index);
+  //   PAGE.data.itemWidth = swiperItemWidth;
+  //   PAGE.data.translateX = translateX;
+  //   swiperList.style.transform = `translateX(${translateX}px)`;
+  // },
+
 }
 
 PAGE.init();
