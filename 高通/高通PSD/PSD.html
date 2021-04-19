@@ -275,8 +275,38 @@
       </div>
     </div>
   </div>
-    
-  <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
-  <script src="./PSD.js"></script>
+  <!-- <script src="./PSD.js"></script> -->
+  <script src="/Users/yangshuhui/Desktop/js/插件书写和应用/Swiper.js"></script>
+  <script>
+    const PAGE = {
+      data: {
+          swiper1: null,
+      },
+      init: function () {
+          this.swiper();
+      },
+      swiper: function () {
+          PAGE.data.swiper1 = new Swiper({
+              swiper: {
+                  elIdParent: 'photo-box',
+                  elClassChild: 'photo',
+              },
+              duration: 500,
+              pagination: {
+                  elClassParent: null,
+                  elClassChild: null,
+                  elChildActiveClass: null,
+              },
+              navigation: {
+                  nextEl: 'towards-right',
+                  prevEl: 'towards-left',
+              },
+              loop: false,
+              loopTime: 1500,
+          });
+      }
+    }
+    PAGE.init();
+  </script>
 </body>
 </html>
